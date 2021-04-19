@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -8,9 +8,12 @@ import { Router } from '@angular/router';
 })
 export class PostsComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private active: ActivatedRoute) { }
 
   ngOnInit() {
+    this.active.queryParams.subscribe( e => {
+      console.log(e);
+    })
   }
 
   addNewPost() {
@@ -19,5 +22,9 @@ export class PostsComponent implements OnInit {
 
   editPost(num: any) {
     this.router.navigate(["dashboard/posts/" + num])
+  }
+
+  search(nombre: string, apellido: string) {
+    this.router.navigate(["/dashboard/posts"], { queryParams: { name: nombre, surname: apellido }})
   }
 }

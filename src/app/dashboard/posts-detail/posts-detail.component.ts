@@ -1,5 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts-detail',
@@ -9,12 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 export class PostsDetailComponent implements OnInit {
 
   result = ""
+  isEditMode: boolean = true
 
-  constructor(private active: ActivatedRoute) { }
+  constructor(private active: ActivatedRoute, private router: Router) {
+    if(router.url.includes("new")) {
+      this.isEditMode = false
+    } else {
+      this.isEditMode = true
+    }
+  }
 
   ngOnInit() {
     this.active.params.subscribe( params => {
-      console.log(params)
       this.result = params.id
     })
   }
